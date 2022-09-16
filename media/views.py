@@ -9,6 +9,7 @@ from .utils import get_tokens_for_user
 from .serializers import RegistrationSerializer, PasswordChangeSerializer, EmployeeSerializer, ResetPasswordSerializer, ProfileSerializer
 
 
+# Registration View API
 class RegistrationView(APIView):
     def post(self, request):
         serializer = RegistrationSerializer(data=request.data)
@@ -18,6 +19,7 @@ class RegistrationView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# Login View API
 class LoginView(APIView):
 
     def post(self, request):
@@ -33,12 +35,14 @@ class LoginView(APIView):
         return Response({'msg': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
+# Logout View API
 class LogoutView(APIView):
     def post(self, request):
         logout(request)
         return Response({'msg': 'Successfully Logged out'}, status=status.HTTP_200_OK)
 
 
+# Change Password API
 class ChangePasswordView(APIView):
     permission_classes = [IsAuthenticated, ]
 
@@ -50,6 +54,7 @@ class ChangePasswordView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+# Employee List API
 class EmployeeList(APIView):
 
     def get(self, request, format=None):
@@ -65,6 +70,7 @@ class EmployeeList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# Reset Password View API
 class ResetPasswordView(APIView):
     def post(self, request):
         serializer = ResetPasswordSerializer(data=request.data)
@@ -77,6 +83,7 @@ class ResetPasswordView(APIView):
         return Response('Failed, retry after some time')
 
 
+# Profile ViewSet API
 class ProfileViewSet(APIView):
 
     def get(self, request, format=None):
